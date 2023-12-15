@@ -1,22 +1,17 @@
-﻿using VPCodeTest.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using VPCodeTestWebAPI.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAllOrigins",
-        builder =>
-        {
-            builder.AllowAnyOrigin()
-                   .AllowAnyHeader()
-                   .AllowAnyMethod();
-        });
-});
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<DeepakContext>();
+builder.Services.AddCors();
+
+
+builder.Services.AddDbContext<ToDoContext>(options =>
+    options.UseSqlServer(connectionString: builder.Configuration.GetConnectionString("VPCODETESTCS")));
 
 var app = builder.Build();
 
@@ -27,17 +22,22 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseCors("AllowAllOrigins");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
+app.UseCors(builder =>
+{
+    builder.AllowAnyOrigin()
+           .AllowAnyHeader()
+           .AllowAnyMethod();
+});
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
 
-app.MapFallbackToFile("index.html");;
+app.MapFallbackToFile("index.html");
 
 app.Run();
 

@@ -1,0 +1,74 @@
+﻿.item-list {
+    list-style: none;
+    padding: 0;
+}
+
+.list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #ccc;
+    padding: 0px;
+    margin-bottom: 0px;
+}
+.list-item-done {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #ccc;
+    padding: 0px;
+    margin-bottom: 0px;
+    background-color: #dc3545;
+}
+
+.delete-button {
+    background-color: #fff;
+    color: #dc3545;
+    border: none;
+    padding: 8px 12px;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.delete-button:hover {
+    color: #c82333;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+tr.header {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+/* Additional styles for even and odd rows */
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+.todoDone {
+    background-color: #dc3545;
+}
+
+.marginRight {
+    margin-right: 10px;
+}
+
+.marginLeft {
+    margin-left: 10px;
+}

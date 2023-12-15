@@ -1,25 +1,19 @@
 import { useEffect, useState } from "react";
 //import { Table, ToastBody } from "../node_modules/reactstrap/types/index";
 
-const App = () => {
+const ToDos = () => {
 
 //1 create useState
     const [tasks, setTasks] = useState([])
 
 //2 Call API
 
-    useEffect(() => {
-        fetch('api/task/gettasks', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                // Add any additional headers if needed
-            }
-            })
-            .then(response => response.json());
-            .then(data => setTasks(data))
-            .catch(error => console.error('Error fetching data:', error));
-    }, [])
+    //useEffect(() => {
+    //    fetch("api/task/gettasks")
+    //        .then(response => response.json());
+    //        .then(data => setTasks(data))
+    //        .catch(error => console.error('Error fetching data:', error));
+    //}, [])
 
     //useEffect(() => {
     //    fetch('api/task/gettasks')
@@ -29,17 +23,41 @@ const App = () => {
     //}, [])
 
 
-    //useEffect(() => {
-    //    fetch('https://localhost:7086/api/task/gettasks')
-    //        .then(response => response.json())
-    //        .then(data => setTasks(data))
-    //        .catch(error => console.error('Error fetching data:', error));
-    //}, []);
+    useEffect(() => {
+        fetch('https://localhost:7211/api/todo/gettodos')
+            .then(response => response.json())
+            .then(data => setTasks(data))
+            .catch(error => console.error('Error fetching data:', error));
+    }, []);
 
-    const handleDelete = (itemId) => {
-        const updateItems = tasks.filter((item) => item.id !== itemId);
-        setTasks(updateItems);
-    }
+    // const handleDelete = (itemId) => {
+    //     const updateItems = tasks.filter((item) => item.id !== itemId);
+        
+    //     setTasks(updateItems);
+    // }
+
+    const handleDelete = async (itemId) => {
+        try {
+          const response = await fetch(`https://localhost:7211/api/todo/${itemId}`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              // Add any additional headers if needed
+            },
+          });
+    
+          if (response.ok) {
+            // If the deletion was successful, update the local state
+            const updateItems = tasks.filter((item) => item.id !== itemId);
+            setTasks(updateItems);
+          } else {
+            // Handle error, maybe show a message to the user
+            console.error('Error deleting item:', response.status);
+          }
+        } catch (error) {
+          console.error('Error:', error.message);
+        }
+      };
 
 //3 create div and table
 
@@ -88,4 +106,4 @@ const App = () => {
     )
 }
 
-export default App;
+export default ToDos;
