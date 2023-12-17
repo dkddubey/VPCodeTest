@@ -7,6 +7,7 @@ const ToDos = () => {
     //1 create useState
     const [tasks, setTasks] = useState([])
     const [filteredTasks, setFilteredTasks] = useState([])
+    const [currentDate, setCurrentDate] = useState(new Date())
 
     useEffect(() => {
         fetchData();
@@ -31,20 +32,14 @@ const ToDos = () => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    // Add any additional headers if needed
                 },
                 body: data
             });
 
             if (response.ok) {
-                // If the deletion was successful, update the local state
-                //const updateItems = tasks.filter((item) => item.id !== itemId);
-                //setTasks(updateItems);
                 fetchData()
-                alert(item.taskName + ": set done");
             } else {
 
-                // Handle error, maybe show a message to the user
                 console.error('Error updating item:', response.status);
             }
         } catch (error) {
@@ -58,23 +53,20 @@ const ToDos = () => {
                 "id": item.id,
                 "taskName": item.taskName,
                 "isCompleted": true,
-                "deadline": item.deadline
+                "deadline": item.deadline?? null
             });
             const response = await fetch(`api/todo/${item.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
-                    // Add any additional headers if needed
                 },
                 body: data,
             });
 
             if (response.ok) {
                 fetchData()
-                alert(item.taskName + ": set done");
             } else {
 
-                // Handle error, maybe show a message to the user
                 console.error('Error updating item:', response.status);
             }
         } catch (error) {
@@ -88,16 +80,13 @@ const ToDos = () => {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
-                    // Add any additional headers if needed
                 },
             });
 
             if (response.ok) {
-                // If the deletion was successful, update the local state
                 const updateItems = tasks.filter((item) => item.id !== itemId);
-                setTasks(updateItems);
+                fetchData()
             } else {
-                // Handle error, maybe show a message to the user
                 console.error('Error deleting item:', response.status);
             }
         } catch (error) {
@@ -142,7 +131,7 @@ const ToDos = () => {
                 </thead>
                 <tbody>
                     {filteredTasks.map(item => (
-                        <tr key={item.id} className={item.isCompleted ? "tododone" : ""} >
+                        <tr key={item.id} className={(new Date(item.deadline)) < currentDate ? "overdue-row" : ""} >
                             <td>
                                 {item.taskName}
                             </td>

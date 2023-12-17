@@ -1,26 +1,4 @@
-﻿.item-list {
-    list-style: none;
-    padding: 0;
-}
-
-.list-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border: 1px solid #ccc;
-    padding: 0px;
-    margin-bottom: 0px;
-}
-.list-item-done {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border: 1px solid #ccc;
-    padding: 0px;
-    margin-bottom: 0px;
-    background-color: #dc3545;
-}
-
+﻿
 .delete-button {
     background-color: #fff;
     color: #dc3545;
@@ -52,17 +30,20 @@ td, th {
     padding: 8px;
 }
 
-/* Additional styles for even and odd rows */
-tr:nth-child(even) {
+/*tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
 tr:nth-child(odd) {
     background-color: #ffffff;
+}*/
+
+.active-row {
+    background-color: green;
 }
 
-.todoDone {
-    background-color: #dc3545;
+.overdue-row {
+    background-color: red;
 }
 
 .marginRight {

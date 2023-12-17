@@ -17,8 +17,9 @@ const AddTask = ({ onAddItem }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Check if required fields are not empty before adding the item
-        if (newItem.taskName.trim() === '' || newItem.deadline.trim() === '') {
+
+        //if (newItem.taskName.trim() === '' || newItem.deadline.trim() === '') {
+        if (newItem.taskName.trim() === '') {
             alert('Please fill in all required fields.', 'Field Validation.');
             return;
         }
@@ -28,10 +29,8 @@ const AddTask = ({ onAddItem }) => {
             return;
         }
 
-        // Pass the new item to the parent component (or handle it as needed)
         onAddItem(newItem);
 
-        // Clear the form
         setNewItem({
             "id": 0,
             "taskName": '',
@@ -68,7 +67,6 @@ const AddTask = ({ onAddItem }) => {
                     placeholder="YYYY-MM-DD"
                 />
             </label>
-            {/* Add other form fields as needed */}
             <button type="submit" disabled={!isValidTask}>Add Task</button>
             {/*{!isValid && <p style={{ color: 'red' }}>Invalid date format:{isValid}</p>}*/}
         </form>
