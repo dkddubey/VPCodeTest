@@ -8,7 +8,7 @@ const AddTask = ({ onAddItem }) => {
         "deadline": ''
     });
 
-    const [isValidTask, setisValidTask] = useState(true);
+    const [validationMessages, setValidationMessages] = useState([]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -17,18 +17,10 @@ const AddTask = ({ onAddItem }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        //if (newItem.taskName.trim() === '' || newItem.deadline.trim() === '') {
-        if (newItem.taskName.trim() === '') {
-            alert('Please fill in all required fields.', 'Field Validation.');
+        if (newItem.taskName.trim() === '' || newItem.deadline.trim() === '') {
+            setValidationMessages(['Please enter a task with greater than 10 chars.', 'Please enter valid date']);
             return;
         }
-
-        if (newItem.taskName.trim() < 10) {
-            alert('Please enter a task with greater than 10 chars.');
-            return;
-        }
-
         onAddItem(newItem);
 
         setNewItem({
@@ -37,20 +29,15 @@ const AddTask = ({ onAddItem }) => {
             "isCompleted": false,
             "deadline": ''
         });
-    };
 
-    const validateDate = () => {
-        const isValid = newItem.taskName.trim().length > 10
-            && newItem.deadline.trim() !== '';
-        setisValidTask(isValid);
-        alert(isValidTask);
+        setValidationMessages([]);
     };
 
     return (
         <form onSubmit={handleSubmit}>
             <label>
                 Task Name:
-                <input className="marginRight"
+                <input className="margin-right"
                     type="text"
                     name="taskName"
                     value={newItem.taskName}
@@ -59,7 +46,7 @@ const AddTask = ({ onAddItem }) => {
             </label>
             <label>
                 Deadline:
-                <input className="marginLeft marginRight"
+                <input className="margin-left margin-right"
                     type="date"
                     name="deadline"
                     value={newItem.deadline}
@@ -67,8 +54,14 @@ const AddTask = ({ onAddItem }) => {
                     placeholder="YYYY-MM-DD"
                 />
             </label>
-            <button type="submit" disabled={!isValidTask}>Add Task</button>
-            {/*{!isValid && <p style={{ color: 'red' }}>Invalid date format:{isValid}</p>}*/}
+            <button type="submit">Add Task</button>
+            {validationMessages.length > 0 && (
+                <div className="validation-messages">
+                    {validationMessages.map((message, index) => (
+                        <li key={index}>{message}</li>
+                    ))}
+                </div>
+            )}
         </form>
     );
 };

@@ -46,10 +46,14 @@ tr:nth-child(odd) {
     background-color: red;
 }
 
-.marginRight {
+.margin-right {
     margin-right: 10px;
 }
 
-.marginLeft {
+.margin-left {
     margin-left: 10px;
+}
+
+.validation-messages {
+    color: red;
 }

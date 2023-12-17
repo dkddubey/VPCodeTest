@@ -20,6 +20,10 @@ const ToDos = () => {
             .catch(error => console.error('Error fetching data', error));
     };
 
+    const isOverDue = (item) => {
+        return (item.isCompleted === false && ((new Date(item.deadline)) < currentDate));
+    }
+
     const handleAddItem = async (item) => {
         try {
             const data = JSON.stringify({
@@ -96,11 +100,15 @@ const ToDos = () => {
 
     const handleOptionChanged = (selectedOption) => {
         if (selectedOption === 'active') {
-            const filtered = tasks.filter((item) => item.isCompleted !== true);
+            const filtered = tasks.filter((item) => !item.isCompleted);
             setFilteredTasks(filtered);
         }
         else if (selectedOption === 'completed') {
-            const filtered = tasks.filter((item) => item.isCompleted === true);
+            const filtered = tasks.filter((item) => item.isCompleted);
+            setFilteredTasks(filtered);
+        }
+        else if (selectedOption === 'overdue') {
+            const filtered = tasks.filter((item) => isOverDue(item))
             setFilteredTasks(filtered);
         }
         else {
@@ -116,6 +124,7 @@ const ToDos = () => {
             day: 'numeric',
         });
     }
+
     return (
         <div className="container">
             <h1>Tasks</h1>
@@ -131,7 +140,7 @@ const ToDos = () => {
                 </thead>
                 <tbody>
                     {filteredTasks.map(item => (
-                        <tr key={item.id} className={(new Date(item.deadline)) < currentDate ? "overdue-row" : ""} >
+                        <tr key={item.id} className={isOverDue(item) ? "overdue-row" : ""} >
                             <td>
                                 {item.taskName}
                             </td>

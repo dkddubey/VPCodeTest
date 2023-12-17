@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 
 const StatusOption = ({ onOptionChange }) => {
-    const [selectedOption, setSelectedOption] = useState('');
+    const [selectedOption, setSelectedOption] = useState('all');
 
     const handleOptionChange = (e) => {
         // Update the state when a radio button is selected
@@ -13,7 +13,7 @@ const StatusOption = ({ onOptionChange }) => {
     return (
         <div>
             <label>
-                <input
+                <input className="margin-left"
                     type="radio"
                     value="all"
                     checked={selectedOption === 'all'}
@@ -22,7 +22,7 @@ const StatusOption = ({ onOptionChange }) => {
                 All
             </label>
             <label>
-                <input
+                <input className="margin-left"
                     type="radio"
                     value="active"
                     checked={selectedOption === 'active'}
@@ -31,13 +31,22 @@ const StatusOption = ({ onOptionChange }) => {
                 Active
             </label>
             <label>
-                <input
+                <input className="margin-left"
                     type="radio"
                     value="completed"
                     checked={selectedOption === 'completed'}
                     onChange={handleOptionChange}
                 />
                 Completed
+            </label>
+            <label>
+                <input className="margin-left"
+                    type="radio"
+                    value="overdue"
+                    checked={selectedOption === 'overdue'}
+                    onChange={handleOptionChange}
+                />
+                Overdue
             </label>
         </div>
     );
