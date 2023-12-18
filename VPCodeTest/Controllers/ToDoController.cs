@@ -9,12 +9,11 @@ namespace VPCodeTest.Controllers
     [Route("api/[controller]")]
     public class ToDoController : Controller
     {
-        private readonly ToDoContext _toDoContext;
-        public ToDoController(ToDoContext toDoContext)
+        private readonly IToDoDbContext _toDoContext;
+        public ToDoController(IToDoDbContext toDoContext)
         {
             _toDoContext = toDoContext;
         }
-
 
 
         [HttpGet]
@@ -44,7 +43,7 @@ namespace VPCodeTest.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ToDo>> PostToDo([FromBody] ToDo toDo)
+        public async Task<ActionResult<ToDo>> Post([FromBody] ToDo toDo)
         {
             _toDoContext.ToDos.Add(toDo);
             await _toDoContext.SaveChangesAsync();
@@ -53,13 +52,13 @@ namespace VPCodeTest.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> PutToDo(int id, [FromBody] ToDo toDo)
+        public async Task<ActionResult> Put(int id, [FromBody] ToDo toDo)
         {
             if (id != toDo.Id)
             {
                 return BadRequest();
             }
-            _toDoContext.Entry(toDo).State = EntityState.Modified;
+            _toDoContext.ToDos.Entry(toDo).State = EntityState.Modified;
             try
             {
                 await _toDoContext.SaveChangesAsync();

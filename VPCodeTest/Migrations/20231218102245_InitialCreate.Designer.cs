@@ -11,7 +11,7 @@ using VPCodeTest.Models;
 
 namespace VPCodeTest.Migrations
 {
-    [DbContext(typeof(ToDoContext))]
+    [DbContext(typeof(ToDoDbContext))]
     [Migration("20231218102245_InitialCreate")]
     partial class InitialCreate
     {

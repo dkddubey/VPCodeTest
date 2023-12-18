@@ -9,7 +9,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddCors();
 
-builder.Services.AddDbContext<ToDoContext>(options =>
+builder.Services.AddDbContext<IToDoDbContext, ToDoDbContext>(options =>
     options.UseSqlServer(connectionString: builder.Configuration.GetConnectionString("VPCODETESTCS")));
 
 var app = builder.Build();
