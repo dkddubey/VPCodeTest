@@ -7,7 +7,7 @@ const App = () => {
     //1 create useState
     const [tasks, setTasks] = useState([])
     const [filteredTasks, setFilteredTasks] = useState([])
-    const [currentDate, setCurrentDate] = useState(new Date())
+    const [currentDate, setCurrentDate] = useState((new Date()).setHours(0, 0, 0, 0))
 
     useEffect(() => {
         fetchData();
@@ -21,7 +21,7 @@ const App = () => {
     };
 
     const isOverDue = (item) => {
-        return (item.isCompleted === false && ((new Date(item.deadline)) < currentDate));
+        return (item.isCompleted === false && (currentDate > (new Date(item.deadline))));
     }
 
     const handleAddTask = async (item) => {
