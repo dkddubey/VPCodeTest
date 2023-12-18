@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using VPCodeTestWebAPI.Models;
+using VPCodeTest.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
