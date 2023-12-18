@@ -1,7 +1,7 @@
 ﻿import React, { useState } from 'react';
 
-const AddTask = ({ onAddItem }) => {
-    const [newItem, setNewItem] = useState({
+const AddTask = ({ onAddTask }) => {
+    const [newTask, setNewTask] = useState({
         "id": 0,
         "taskName": '',
         "isCompleted": false,
@@ -12,44 +12,67 @@ const AddTask = ({ onAddItem }) => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setNewItem((prevItem) => ({ ...prevItem, [name]: value }));
+        setNewTask((prevItem) => ({ ...prevItem, [name]: value }));
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (newItem.taskName.trim() === '' || newItem.deadline.trim() === '') {
-            setValidationMessages(['Please enter a task with greater than 10 chars.', 'Please enter valid date']);
+        setValidationMessages([])
+        if (!validatTask()) {
             return;
+        } else {
+            setValidationMessages([])
         }
-        onAddItem(newItem);
+        onAddTask(newTask);
 
-        setNewItem({
+        setNewTask({
             "id": 0,
             "taskName": '',
             "isCompleted": false,
             "deadline": ''
         });
-
-        setValidationMessages([]);
     };
+
+    const validatTask = () => {
+        let isValid = true;
+
+        //Validate task name
+        if (newTask.taskName.trim().length === 0) {
+            setValidationMessages((prevErrors) => ([ ...prevErrors, 'Task name is required.' ]));
+            isValid = false;
+        } else if (newTask.taskName.trim().length < 11) {
+            setValidationMessages((prevErrors) => ([...prevErrors, 'Task must be longer than 10 characters.']));
+            isValid = false;
+        } 
+
+        // Validate deadline
+        if (newTask.deadline.trim().length === 0) {
+            setValidationMessages((prevErrors) => ([...prevErrors,'Deadline is required.']));
+            isValid = false;
+        }
+
+        return isValid;
+    };
+
 
     return (
         <form onSubmit={handleSubmit}>
-            <label>
+            <label style={{width:'60%'} }>
                 Task Name:
-                <input className="margin-right"
+                <input className="input-task-name"
                     type="text"
                     name="taskName"
-                    value={newItem.taskName}
+                    value={newTask.taskName}
                     onChange={handleChange}
+                    placeholder="Task name longer than 10 characters"
                 />
             </label>
             <label>
                 Deadline:
-                <input className="margin-left margin-right"
+                <input 
                     type="date"
                     name="deadline"
-                    value={newItem.deadline}
+                    value={newTask.deadline}
                     onChange={handleChange}
                     placeholder="YYYY-MM-DD"
                 />

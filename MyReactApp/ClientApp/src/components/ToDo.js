@@ -24,7 +24,7 @@ const ToDos = () => {
         return (item.isCompleted === false && ((new Date(item.deadline)) < currentDate));
     }
 
-    const handleAddItem = async (item) => {
+    const handleAddTask = async (item) => {
         try {
             const data = JSON.stringify({
                 "id": 0,
@@ -128,11 +128,11 @@ const ToDos = () => {
     return (
         <div className="container">
             <h1>Tasks</h1>
-            <AddTask onAddItem={handleAddItem} />
+            <AddTask onAddTask={handleAddTask} />
             <table className="table">
                 <thead>
                     <tr className="header">
-                        <th>Task details</th>
+                        <th style={{width:'60%'}}>Task details</th>
                         <th>Deadline</th>
                         <th>Status</th>
                         <th>Action</th>
