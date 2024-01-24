@@ -19,7 +19,7 @@ stages:
     displayName: Build
     pool:
       vmImage: windows-latest
-    steps:
+    # steps:
     # - task: Docker@2
     #   displayName: Build an image
     #   inputs:
